@@ -12,12 +12,9 @@ def getRandomCharacters():
         random_characters.append(random_selection)
         characters.remove(random_selection)
     return random_characters
-
-
-def getKey(key):
-    print("getting key for decryption")
     
-def createKey():
+def encrypt(directory):
+    success = False
     character_base = getRandomCharacters()
     character_code = getRandomCharacters()
     
@@ -35,7 +32,7 @@ def createKey():
     while base_idx == code_idx:
         base_idx, code_idx = random.randint(0, 101), random.randint(0, 101)
     
-    key = []
+    cypher_key = []
     line_idx = 0
     while (line_idx < 94):
         char_idx = 0
@@ -50,9 +47,9 @@ def createKey():
             else:
                 printline = printline + random.choice(getRandomCharacters())
             char_idx = char_idx + 1
-        key.append(printline)
+        cypher_key.append(printline)
         line_idx = line_idx + 1
-    # add line 95, with the phrase v3h-S6XH2v&}W5b<w1n~ embedded. int 0 - 80
+
     key_idx, char_idx, printline = random.randint(-1, 80), 0, ""
     while char_idx < 81:
         if char_idx == key_idx:
@@ -66,25 +63,30 @@ def createKey():
         else:
             printline = printline + random.choice(getRandomCharacters())
         char_idx = char_idx + 1
-    key.append(printline)
-    return key    
+    cypher_key.append(printline)
+    
+    if os.path.isdir(directory):
+        success = True
+        key_output_file = directory + "k3y_" + str(random.randint(99, 1000)) + ".cyr"
+        for key in cypher_key:
+            file = open(key_output_file, "a")
+            file.write(key + '\n')
+            file.close()
+    else:
+        print("directory not found")
+    
+    # encrypt text file next, line by line
+    return success
 
-print("CYPHER - A TEXT FILE ENCRYPTION APP")
+print("CYPH3R - A TEXT FILE ENCRYPTION APP")
 print("===================================")
 print()
-directory = "/Users/christian/Documents/cyph3r/" # this would be created dynamically otherwise
-if os.path.isdir(directory):
-    print("directory found, generating cypher key")
-    key_output_file = directory + "k3y_" + str(random.randint(99, 1000)) + ".cyr"
-    cypher_key = createKey()
-    for key in cypher_key:
-        file = open(key_output_file, "a")
-        file.write(key + '\n')
-        file.close()
 
-    print("remember to remove your key file from the directory /Users/christian/Documents/cyph3r/")
+directory = "/Users/christian/Documents/cyph3r/"
+success = encrypt(directory)
+if success == True:
+    print("Encryption successful")
 else:
-    print("directory not found")
-
+    print("Encryption Failed")
 print()
 print("Goodbye")
