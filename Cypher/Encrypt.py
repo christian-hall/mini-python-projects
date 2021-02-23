@@ -13,11 +13,11 @@ def getRandomCharacters():
         characters.remove(random_selection)
     return random_characters
 
-def encrypt(key, file):
-    print("encrypting file...")
+
+def getKey(key):
+    print("getting key for decryption")
     
-    
-def getKey():
+def createKey():
     character_base = getRandomCharacters()
     character_code = getRandomCharacters()
     
@@ -29,6 +29,7 @@ def getKey():
         char_key.append([random_base, random_code])
         character_code.remove(random_code)
         character_base.remove(random_base)
+    
     base_idx, code_idx = 1,1
     
     while base_idx == code_idx:
@@ -55,16 +56,21 @@ def getKey():
     key_idx, char_idx, printline = random.randint(-1, 80), 0, ""
     while char_idx < 81:
         if char_idx == key_idx:
-            printline = printline + "v3h-S6XH2v&}W5b<w1n~"
+            key_phrase = "v3h-S6XH2v&}W5b<w1n~"
+            coded_key_phrase = ""
+            for key_phrase_char in key_phrase:
+                for char_key_entry in char_key:
+                    if key_phrase_char == char_key_entry[0]:
+                        coded_key_phrase = coded_key_phrase + char_key_entry[1]
+            printline = printline + coded_key_phrase
         else:
             printline = printline + random.choice(getRandomCharacters())
         char_idx = char_idx + 1
-    
     key.append(printline)
     return key
     # concat a document of 95 lines, the last line being informaiton and the first 94 being gibberish with the key
     
-key = getKey()
+key = createKey()
 for k in key:
     print(k)
 print()
