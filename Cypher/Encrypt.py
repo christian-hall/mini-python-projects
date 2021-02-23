@@ -67,11 +67,24 @@ def createKey():
             printline = printline + random.choice(getRandomCharacters())
         char_idx = char_idx + 1
     key.append(printline)
-    return key
-    # concat a document of 95 lines, the last line being informaiton and the first 94 being gibberish with the key
-    
-key = createKey()
-for k in key:
-    print(k)
+    return key    
+
+print("CYPHER - A TEXT FILE ENCRYPTION APP")
+print("===================================")
+print()
+directory = "/Users/christian/Documents/cyph3r/" # this would be created dynamically otherwise
+if os.path.isdir(directory):
+    print("directory found, generating cypher key")
+    key_output_file = directory + "k3y_" + str(random.randint(99, 1000)) + ".cyr"
+    cypher_key = createKey()
+    for key in cypher_key:
+        file = open(key_output_file, "a")
+        file.write(key + '\n')
+        file.close()
+
+    print("remember to remove your key file from the directory /Users/christian/Documents/cyph3r/")
+else:
+    print("directory not found")
+
 print()
 print("Goodbye")
