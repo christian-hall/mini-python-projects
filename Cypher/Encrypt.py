@@ -66,15 +66,13 @@ def encrypt(directory, input_file):
     cypher_key.append(printline)
     
     if os.path.isdir(directory) and os.path.isfile(input_file):
-        success = True
         key_output_file = directory + "k3y_" + str(random.randint(99, 1000)) + ".cyr"
-        for key in cypher_key:
-            file = open(key_output_file, "a")
+        file = open(key_output_file, "a")
+        for key in cypher_key: 
             file.write(key + '\n')
-            file.close()
+        file.close()
         
         output_text = []
-        # read input_file, line by line, character by character
         with open(input_file) as file:
             for line in file:
                 newline = ""
@@ -83,13 +81,17 @@ def encrypt(directory, input_file):
                         if character == char_key_entry[0]:
                             newline = newline + char_key_entry[1]
                 output_text.append(newline)
-                
-                
-                #iterate through this character by character and append to a new line
-        
+        file.close
+            
         # create an output file and add each line, line-by line
+        output_file = input_file[:len(input_file) - 4] + ".cyr"
+        file = open(output_file, "a")
+        for line in output_text:
+            file.write(line + '\n')
+        file.close()
     
-    
+        success = True
+            
     return success
 
 print("CYPH3R - A TEXT FILE ENCRYPTION APP")
@@ -97,7 +99,9 @@ print("===================================")
 print()
 
 directory = "/Users/christian/Documents/cyph3r/"
-input_file = directory + input("What is the name of the file you are encrypting: ")
+input_file = directory + input("What is the name of the text file you are encrypting: ") + ".txt"
+if ".txt.txt" in input_file:
+    input_file = input_file[:len(input_file) - 4]
 success = encrypt(directory, input_file)
 if success == True:
     print("Encryption successful")
