@@ -13,7 +13,7 @@ def getRandomCharacters():
         characters.remove(random_selection)
     return random_characters
     
-def encrypt(directory):
+def encrypt(directory, input_file):
     success = False
     character_base = getRandomCharacters()
     character_code = getRandomCharacters()
@@ -65,17 +65,31 @@ def encrypt(directory):
         char_idx = char_idx + 1
     cypher_key.append(printline)
     
-    if os.path.isdir(directory):
+    if os.path.isdir(directory) and os.path.isfile(input_file):
         success = True
         key_output_file = directory + "k3y_" + str(random.randint(99, 1000)) + ".cyr"
         for key in cypher_key:
             file = open(key_output_file, "a")
             file.write(key + '\n')
             file.close()
-    else:
-        print("directory not found")
+        
+        output_text = []
+        # read input_file, line by line, character by character
+        with open(input_file) as file:
+            for line in file:
+                newline = ""
+                for character in line:
+                    for char_key_entry in char_key:
+                        if character == char_key_entry[0]:
+                            newline = newline + char_key_entry[1]
+                output_text.append(newline)
+                
+                
+                #iterate through this character by character and append to a new line
+        
+        # create an output file and add each line, line-by line
     
-    # encrypt text file next, line by line
+    
     return success
 
 print("CYPH3R - A TEXT FILE ENCRYPTION APP")
@@ -83,7 +97,8 @@ print("===================================")
 print()
 
 directory = "/Users/christian/Documents/cyph3r/"
-success = encrypt(directory)
+input_file = directory + input("What is the name of the file you are encrypting: ")
+success = encrypt(directory, input_file)
 if success == True:
     print("Encryption successful")
 else:
