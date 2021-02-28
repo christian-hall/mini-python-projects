@@ -11,7 +11,6 @@ def unencrypt(input_file, keypath):
         coded_line = key_lines[-1]
         del key_lines[-1]
         base_idx = 0
-        attempt = 0
         # while "v3h-S6XH2v&}W5b<w1n~" not in uncoded_line:
         while base_idx < len(key_lines):
             cypher_key = []
@@ -20,23 +19,27 @@ def unencrypt(input_file, keypath):
                 if code_idx == base_idx:
                     pass
                 else:
-                    print("try " + str(attempt))
-                    attempt = attempt + 1
                     for key_line in key_lines:
                         base_key = key_line[base_idx]
                         code_key = key_line[code_idx]
                         cypher_key.append([base_key, code_key])
                         #attempt to decode coded_line
                     decoded_line = ""
-
-                                    
+                    for char in coded_line:
+                        for cypher_line in cypher_key:
+                            if char == cypher_line[1]:
+                                decoded_line = decoded_line + ""
+                    if "v3h-S6XH2v&}W5b<w1n~" in decoded_line:
+                        success = True
+                        break       
                 code_idx = code_idx + 1
             base_idx = base_idx + 1
+            if success == True:
+                break
         # get input file
         with open(input_file) as file:
             for line in file:
                 input_lines.append(line)
-        success = True
     # get key from keypath
     # unencrypt key to get unencryption
     # delete key automatically
