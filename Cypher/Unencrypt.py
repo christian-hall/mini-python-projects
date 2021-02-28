@@ -8,6 +8,30 @@ def unencrypt(input_file, keypath):
         with open(keypath) as file:
             for line in file:
                 key_lines.append(line)
+        coded_line = key_lines[-1]
+        del key_lines[-1]
+        base_idx = 0
+        attempt = 0
+        # while "v3h-S6XH2v&}W5b<w1n~" not in uncoded_line:
+        while base_idx < len(key_lines):
+            cypher_key = []
+            code_idx = 0
+            while code_idx < len(key_lines[1]):                
+                if code_idx == base_idx:
+                    pass
+                else:
+                    print("try " + str(attempt))
+                    attempt = attempt + 1
+                    for key_line in key_lines:
+                        base_key = key_line[base_idx]
+                        code_key = key_line[code_idx]
+                        cypher_key.append([base_key, code_key])
+                        #attempt to decode coded_line
+                    decoded_line = ""
+
+                                    
+                code_idx = code_idx + 1
+            base_idx = base_idx + 1
         # get input file
         with open(input_file) as file:
             for line in file:
@@ -27,8 +51,6 @@ directory = "/Users/christian/Documents/cyph3r/"
 
 input_file = directory + input("What is the name of the cyr file you are unencrypting: ") + ".cyr"
 keypath = directory + "k3y_"+ input("What is k3y number (3 digits): ") + ".cyr"
-print(input_file)
-print(keypath)
 if ".cyr.cyr" in input_file:
     input_file = input_file[:len(input_file) - 4]
 success = unencrypt(input_file, keypath)
