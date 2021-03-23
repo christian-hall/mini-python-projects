@@ -1,0 +1,13 @@
+
+public class cyph3r {
+
+	public static boolean encrypt(String filePath) {
+		return false;
+		
+	}
+	
+	public static boolean decrypt (String filePath, String keyPath) {
+		return false;
+	}
+
+}

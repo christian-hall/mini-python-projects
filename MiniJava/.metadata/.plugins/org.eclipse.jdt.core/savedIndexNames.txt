@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+/Users/christian/Documents/git/MiniPython/MiniJava/.metadata/.plugins/org.eclipse.jdt.core
+3188466515.index
+1138309258.index
